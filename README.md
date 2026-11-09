@@ -1,6 +1,26 @@
 # WhatsApp Spoiler
 
-A small React app for composing multiline WhatsApp messages that hide book spoilers.
+A small React app for creating multiline WhatsApp messages that place book spoilers below a visible spoiler warning and filler lines.
+
+## How it works
+
+1. Enter the book name.
+2. Choose whether to reference a page or a chapter, then enter its number or name.
+3. Optionally enter the spoiler text.
+4. Select **Gerar meu spoiler** to create the message. It contains the title, 30 lines of `=` characters, and the spoiler text at the end.
+5. Select **Copie o texto** to copy the generated message.
+
+The title uses this format, with either the page or chapter reference:
+
+```text
+[SPOILER][Livro: Nome do livro][Página: 42]
+```
+
+or:
+
+```text
+[SPOILER][Livro: Nome do livro][Capítulo: 3]
+```
 
 ## Getting started
 

@@ -72,6 +72,28 @@ describe('spoiler message form', () => {
     expect(title).not.toContain('[Página:');
   });
 
+  it('generates the complete expected message from the form values', () => {
+    render(<App />);
+
+    fireEvent.change(screen.getByLabelText('Nome do livro'), {
+      target: { value: 'The Left Hand of Darkness' },
+    });
+    fireEvent.change(screen.getByLabelText('Número da página'), {
+      target: { value: '126' },
+    });
+    fireEvent.change(screen.getByLabelText('Texto do spoiler'), {
+      target: { value: 'The envoy survives.' },
+    });
+    fireEvent.click(screen.getByRole('button', { name: 'Gerar meu spoiler' }));
+
+    const expectedMessage = [
+      '[SPOILER][Livro: The Left Hand of Darkness][Página: 126]',
+      ...Array(30).fill('============'),
+      'The envoy survives.',
+    ].join('\n');
+    expect(screen.getByLabelText('Mensagem')).toHaveValue(expectedMessage);
+  });
+
   it('copies the current message when the copy button is clicked', async () => {
     render(<App />);
 

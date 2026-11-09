@@ -39,8 +39,12 @@ make build
 
 The build uses relative asset paths, so its contents can be hosted from a subfolder such as `whatsapp-spoiler/` on GitHub Pages. Copy the contents of `dist/` into that folder when publishing.
 
-Run the unit tests with:
+Run all tests, or choose a test group:
 
 ```sh
-npm test
+make tests
+make unit-tests
+make integration-tests
 ```
+
+Component-level unit tests live alongside the components. Integration tests cover the complete form-to-message flow.

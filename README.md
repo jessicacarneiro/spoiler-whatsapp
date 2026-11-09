@@ -37,7 +37,13 @@ To create a production build:
 make build
 ```
 
-The build uses relative asset paths, so its contents can be hosted from a subfolder such as `whatsapp-spoiler/` on GitHub Pages. Copy the contents of `dist/` into that folder when publishing.
+## Publish with GitHub Pages
+
+This repository is configured to publish automatically to [https://jessicacarneiro.github.io/spoiler-whatsapp/](https://jessicacarneiro.github.io/spoiler-whatsapp/) whenever changes are pushed to `main`. GitHub Actions runs the tests, builds the site, and deploys the `dist/` folder.
+
+To enable publishing, open the repository's **Settings → Pages** and set **Build and deployment → Source** to **GitHub Actions**. After the first successful workflow run, future pushes to `main` publish automatically.
+
+The Vite build uses the `/spoiler-whatsapp/` base path in GitHub Actions, while local development continues to use `/`.
 
 Run all tests, or choose a test group:
 

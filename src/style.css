@@ -35,7 +35,8 @@ body {
 }
 
 .spoiler-form input,
-.spoiler-form textarea {
+.spoiler-form textarea,
+.spoiler-form select {
   width: 100%;
   padding: 0.75rem;
   border: 1px solid #cbd5e1;

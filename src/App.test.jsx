@@ -48,6 +48,30 @@ describe('spoiler message form', () => {
     expect(message.value.endsWith('\nCapitu foi embora.')).toBe(true);
   });
 
+  it('uses either the page or chapter reference in the title, never both', () => {
+    render(<App />);
+
+    fireEvent.change(screen.getByLabelText('Nome do livro'), {
+      target: { value: 'Kindred' },
+    });
+    fireEvent.change(screen.getByLabelText('Número da página'), {
+      target: { value: '81' },
+    });
+    fireEvent.change(screen.getByLabelText('Referência'), {
+      target: { value: 'chapter' },
+    });
+
+    expect(screen.queryByLabelText('Número da página')).not.toBeInTheDocument();
+    fireEvent.change(screen.getByLabelText('Capítulo'), {
+      target: { value: '4' },
+    });
+    fireEvent.click(screen.getByRole('button', { name: 'Gerar meu spoiler' }));
+
+    const title = screen.getByLabelText('Mensagem').value.split('\n')[0];
+    expect(title).toBe('[SPOILER][Livro: Kindred][Capítulo: 4]');
+    expect(title).not.toContain('[Página:');
+  });
+
   it('copies the current message when the copy button is clicked', async () => {
     render(<App />);
 

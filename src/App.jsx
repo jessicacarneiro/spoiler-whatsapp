@@ -4,11 +4,13 @@ const fillerLines = Array.from({ length: 30 }, () => '='.repeat(12)).join('\n');
 
 export default function App() {
   const [bookTitle, setBookTitle] = useState('');
-  const [pageNumber, setPageNumber] = useState('');
+  const [referenceType, setReferenceType] = useState('page');
+  const [referenceValue, setReferenceValue] = useState('');
   const [spoilerText, setSpoilerText] = useState('');
   const [generatedMessage, setGeneratedMessage] = useState('');
 
-  const titleLine = `[SPOILER][Livro: ${bookTitle}][Página: ${pageNumber}]`;
+  const referenceLabel = referenceType === 'page' ? 'Página' : 'Capítulo';
+  const titleLine = `[SPOILER][Livro: ${bookTitle}][${referenceLabel}: ${referenceValue}]`;
   const message = generatedMessage;
 
   function handleGenerate(event) {
@@ -34,15 +36,31 @@ export default function App() {
           required
         />
 
-        <label htmlFor="page-number">Número da página</label>
+        <label htmlFor="reference-type">Referência</label>
+        <select
+          id="reference-type"
+          name="referenceType"
+          value={referenceType}
+          onChange={(event) => {
+            setReferenceType(event.target.value);
+            setReferenceValue('');
+          }}
+        >
+          <option value="page">Página</option>
+          <option value="chapter">Capítulo</option>
+        </select>
+
+        <label htmlFor="reference-value">
+          {referenceType === 'page' ? 'Número da página' : 'Capítulo'}
+        </label>
         <input
-          id="page-number"
-          name="pageNumber"
-          type="number"
-          min="1"
-          value={pageNumber}
-          onChange={(event) => setPageNumber(event.target.value)}
-          placeholder="Ex.: 42"
+          id="reference-value"
+          name="referenceValue"
+          type={referenceType === 'page' ? 'number' : 'text'}
+          min={referenceType === 'page' ? '1' : undefined}
+          value={referenceValue}
+          onChange={(event) => setReferenceValue(event.target.value)}
+          placeholder={referenceType === 'page' ? 'Ex.: 42' : 'Ex.: 3'}
           required
         />
 

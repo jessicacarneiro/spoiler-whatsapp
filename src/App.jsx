@@ -1,10 +1,13 @@
 import { useState } from 'react';
 
+const fillerLines = Array.from({ length: 30 }, () => '='.repeat(12)).join('\n');
+
 export default function App() {
   const [bookTitle, setBookTitle] = useState('');
   const [pageNumber, setPageNumber] = useState('');
 
   const titleLine = `[SPOILER][Livro: ${bookTitle}][Página: ${pageNumber}]`;
+  const message = `${titleLine}\n${fillerLines}`;
 
   return (
     <main className="page">
@@ -39,14 +42,14 @@ export default function App() {
         <label htmlFor="message-output">Mensagem</label>
         <textarea
           id="message-output"
-          value={titleLine}
+          value={message}
           readOnly
           rows={3}
         />
         <button
           className="copy-button"
           type="button"
-          onClick={() => navigator.clipboard.writeText(titleLine)}
+          onClick={() => navigator.clipboard.writeText(message)}
         >
           Copie o texto
         </button>

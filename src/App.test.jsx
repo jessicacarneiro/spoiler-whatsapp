@@ -19,7 +19,10 @@ describe('spoiler message form', () => {
     render(<App />);
 
     const message = screen.getByLabelText('Mensagem');
-    expect(message).toHaveValue('[SPOILER][Livro: ][Página: ]');
+    const initialMessage = message.value.split('\n');
+    expect(initialMessage[0]).toBe('[SPOILER][Livro: ][Página: ]');
+    expect(initialMessage).toHaveLength(31);
+    expect(initialMessage.slice(1)).toEqual(Array(30).fill('============'));
 
     fireEvent.change(screen.getByLabelText('Nome do livro'), {
       target: { value: 'Dom Casmurro' },
@@ -28,7 +31,9 @@ describe('spoiler message form', () => {
       target: { value: '42' },
     });
 
-    expect(message).toHaveValue('[SPOILER][Livro: Dom Casmurro][Página: 42]');
+    expect(message.value.split('\n')[0]).toBe(
+      '[SPOILER][Livro: Dom Casmurro][Página: 42]',
+    );
   });
 
   it('copies the current message when the copy button is clicked', async () => {
@@ -43,7 +48,9 @@ describe('spoiler message form', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Copie o texto' }));
 
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
-      '[SPOILER][Livro: A Hora da Estrela][Página: 17]',
+      `[SPOILER][Livro: A Hora da Estrela][Página: 17]\n${Array(30)
+        .fill('============')
+        .join('\n')}`,
     );
   });
 });

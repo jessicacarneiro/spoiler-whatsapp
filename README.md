@@ -37,6 +37,8 @@ To create a production build:
 make build
 ```
 
+The build uses relative asset paths, so its contents can be hosted from a subfolder such as `whatsapp-spoiler/` on GitHub Pages. Copy the contents of `dist/` into that folder when publishing.
+
 Run the unit tests with:
 
 ```sh

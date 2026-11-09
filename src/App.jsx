@@ -6,15 +6,23 @@ export default function App() {
   const [bookTitle, setBookTitle] = useState('');
   const [pageNumber, setPageNumber] = useState('');
   const [spoilerText, setSpoilerText] = useState('');
+  const [generatedMessage, setGeneratedMessage] = useState('');
 
   const titleLine = `[SPOILER][Livro: ${bookTitle}][Página: ${pageNumber}]`;
-  const message = `${titleLine}\n${fillerLines}${spoilerText ? `\n${spoilerText}` : ''}`;
+  const message = generatedMessage;
+
+  function handleGenerate(event) {
+    event.preventDefault();
+    setGeneratedMessage(
+      `${titleLine}\n${fillerLines}${spoilerText ? `\n${spoilerText}` : ''}`,
+    );
+  }
 
   return (
     <main className="page">
       <h1>Gerar mensagem com spoiler</h1>
 
-      <form className="spoiler-form" onSubmit={(event) => event.preventDefault()}>
+      <form className="spoiler-form" onSubmit={handleGenerate}>
         <label htmlFor="book-title">Nome do livro</label>
         <input
           id="book-title"
@@ -47,24 +55,30 @@ export default function App() {
           onChange={(event) => setSpoilerText(event.target.value)}
           placeholder="Digite o spoiler aqui"
         />
+
+        <button className="generate-button" type="submit">
+          Gerar meu spoiler
+        </button>
       </form>
 
-      <section className="preview" aria-live="polite">
-        <label htmlFor="message-output">Mensagem</label>
-        <textarea
-          id="message-output"
-          value={message}
-          readOnly
-          rows={3}
-        />
-        <button
-          className="copy-button"
-          type="button"
-          onClick={() => navigator.clipboard.writeText(message)}
-        >
-          Copie o texto
-        </button>
-      </section>
+      {message && (
+        <section className="preview" aria-live="polite">
+          <label htmlFor="message-output">Mensagem</label>
+          <textarea
+            id="message-output"
+            value={message}
+            readOnly
+            rows={8}
+          />
+          <button
+            className="copy-button"
+            type="button"
+            onClick={() => navigator.clipboard.writeText(message)}
+          >
+            Copie o texto
+          </button>
+        </section>
+      )}
     </main>
   );
 }

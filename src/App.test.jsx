@@ -18,11 +18,7 @@ describe('spoiler message form', () => {
   it('renders the message title in the requested format and updates it from the form', () => {
     render(<App />);
 
-    const message = screen.getByLabelText('Mensagem');
-    const initialMessage = message.value.split('\n');
-    expect(initialMessage[0]).toBe('[SPOILER][Livro: ][Página: ]');
-    expect(initialMessage).toHaveLength(31);
-    expect(initialMessage.slice(1)).toEqual(Array(30).fill('============'));
+    expect(screen.queryByLabelText('Mensagem')).not.toBeInTheDocument();
 
     fireEvent.change(screen.getByLabelText('Nome do livro'), {
       target: { value: 'Dom Casmurro' },
@@ -31,6 +27,15 @@ describe('spoiler message form', () => {
       target: { value: '42' },
     });
 
+    expect(screen.queryByLabelText('Mensagem')).not.toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: 'Gerar meu spoiler' }));
+
+    const message = screen.getByLabelText('Mensagem');
+    const generatedLines = message.value.split('\n');
+    expect(generatedLines[0]).toBe('[SPOILER][Livro: Dom Casmurro][Página: 42]');
+    expect(generatedLines).toHaveLength(31);
+    expect(generatedLines.slice(1)).toEqual(Array(30).fill('============'));
+
     expect(message.value.split('\n')[0]).toBe(
       '[SPOILER][Livro: Dom Casmurro][Página: 42]',
     );
@@ -38,6 +43,8 @@ describe('spoiler message form', () => {
     fireEvent.change(screen.getByLabelText('Texto do spoiler'), {
       target: { value: 'Capitu foi embora.' },
     });
+    expect(message.value.endsWith('\nCapitu foi embora.')).toBe(false);
+    fireEvent.click(screen.getByRole('button', { name: 'Gerar meu spoiler' }));
     expect(message.value.endsWith('\nCapitu foi embora.')).toBe(true);
   });
 
@@ -53,6 +60,7 @@ describe('spoiler message form', () => {
     fireEvent.change(screen.getByLabelText('Texto do spoiler'), {
       target: { value: 'A personagem era o narrador.' },
     });
+    fireEvent.click(screen.getByRole('button', { name: 'Gerar meu spoiler' }));
     fireEvent.click(screen.getByRole('button', { name: 'Copie o texto' }));
 
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith(

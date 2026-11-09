@@ -34,6 +34,11 @@ describe('spoiler message form', () => {
     expect(message.value.split('\n')[0]).toBe(
       '[SPOILER][Livro: Dom Casmurro][Página: 42]',
     );
+
+    fireEvent.change(screen.getByLabelText('Texto do spoiler'), {
+      target: { value: 'Capitu foi embora.' },
+    });
+    expect(message.value.endsWith('\nCapitu foi embora.')).toBe(true);
   });
 
   it('copies the current message when the copy button is clicked', async () => {
@@ -45,12 +50,15 @@ describe('spoiler message form', () => {
     fireEvent.change(screen.getByLabelText('Número da página'), {
       target: { value: '17' },
     });
+    fireEvent.change(screen.getByLabelText('Texto do spoiler'), {
+      target: { value: 'A personagem era o narrador.' },
+    });
     fireEvent.click(screen.getByRole('button', { name: 'Copie o texto' }));
 
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
       `[SPOILER][Livro: A Hora da Estrela][Página: 17]\n${Array(30)
         .fill('============')
-        .join('\n')}`,
+        .join('\n')}\nA personagem era o narrador.`,
     );
   });
 });

@@ -5,9 +5,10 @@ const fillerLines = Array.from({ length: 30 }, () => '='.repeat(12)).join('\n');
 export default function App() {
   const [bookTitle, setBookTitle] = useState('');
   const [pageNumber, setPageNumber] = useState('');
+  const [spoilerText, setSpoilerText] = useState('');
 
   const titleLine = `[SPOILER][Livro: ${bookTitle}][Página: ${pageNumber}]`;
-  const message = `${titleLine}\n${fillerLines}`;
+  const message = `${titleLine}\n${fillerLines}${spoilerText ? `\n${spoilerText}` : ''}`;
 
   return (
     <main className="page">
@@ -35,6 +36,16 @@ export default function App() {
           onChange={(event) => setPageNumber(event.target.value)}
           placeholder="Ex.: 42"
           required
+        />
+
+        <label htmlFor="spoiler-text">Texto do spoiler</label>
+        <textarea
+          id="spoiler-text"
+          name="spoilerText"
+          rows={5}
+          value={spoilerText}
+          onChange={(event) => setSpoilerText(event.target.value)}
+          placeholder="Digite o spoiler aqui"
         />
       </form>
 

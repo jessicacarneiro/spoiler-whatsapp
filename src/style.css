@@ -34,12 +34,17 @@ body {
   font-weight: 600;
 }
 
-.spoiler-form input {
+.spoiler-form input,
+.spoiler-form textarea {
   width: 100%;
   padding: 0.75rem;
   border: 1px solid #cbd5e1;
   border-radius: 0.5rem;
   font: inherit;
+}
+
+.spoiler-form textarea {
+  resize: vertical;
 }
 
 .spoiler-form input + label {

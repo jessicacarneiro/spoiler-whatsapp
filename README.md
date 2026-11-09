@@ -7,7 +7,7 @@ A small React app for creating multiline WhatsApp messages that place book spoil
 1. Enter the book name.
 2. Choose whether to reference a page or a chapter, then enter its number or name.
 3. Optionally enter the spoiler text.
-4. Select **Gerar meu spoiler** to create the message. It contains the title, 30 lines of `=` characters, and the spoiler text at the end.
+4. Select **Gerar meu spoiler** to create the message. It contains the title, 100 lines of `=` characters, and the spoiler text at the end.
 5. Select **Copie o texto** to copy the generated message.
 
 The title uses this format, with either the page or chapter reference:

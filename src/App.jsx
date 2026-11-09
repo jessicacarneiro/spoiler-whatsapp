@@ -2,7 +2,7 @@ import { useState } from 'react';
 import MessagePreview from './components/MessagePreview.jsx';
 import SpoilerForm from './components/SpoilerForm.jsx';
 
-const fillerLines = Array.from({ length: 30 }, () => '='.repeat(12)).join('\n');
+const fillerLines = Array.from({ length: 100 }, () => '='.repeat(12)).join('\n');
 
 export default function App() {
   const [bookTitle, setBookTitle] = useState('');

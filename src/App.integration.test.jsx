@@ -33,8 +33,8 @@ describe('spoiler message form', () => {
     const message = screen.getByLabelText('Mensagem');
     const generatedLines = message.value.split('\n');
     expect(generatedLines[0]).toBe('[SPOILER][Livro: Dom Casmurro][Página: 42]');
-    expect(generatedLines).toHaveLength(31);
-    expect(generatedLines.slice(1)).toEqual(Array(30).fill('============'));
+    expect(generatedLines).toHaveLength(101);
+    expect(generatedLines.slice(1)).toEqual(Array(100).fill('============'));
 
     expect(message.value.split('\n')[0]).toBe(
       '[SPOILER][Livro: Dom Casmurro][Página: 42]',
@@ -88,7 +88,7 @@ describe('spoiler message form', () => {
 
     const expectedMessage = [
       '[SPOILER][Livro: The Left Hand of Darkness][Página: 126]',
-      ...Array(30).fill('============'),
+      ...Array(100).fill('============'),
       'The envoy survives.',
     ].join('\n');
     expect(screen.getByLabelText('Mensagem')).toHaveValue(expectedMessage);
@@ -110,7 +110,7 @@ describe('spoiler message form', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Copie o texto' }));
 
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
-      `[SPOILER][Livro: A Hora da Estrela][Página: 17]\n${Array(30)
+      `[SPOILER][Livro: A Hora da Estrela][Página: 17]\n${Array(100)
         .fill('============')
         .join('\n')}\nA personagem era o narrador.`,
     );

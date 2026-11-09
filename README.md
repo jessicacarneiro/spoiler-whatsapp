@@ -27,14 +27,14 @@ or:
 Install dependencies and start the development server:
 
 ```sh
-npm install
-npm run dev
+make install
+make run
 ```
 
 To create a production build:
 
 ```sh
-npm run build
+make build
 ```
 
 Run the unit tests with:
